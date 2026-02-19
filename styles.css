@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #2A7B9B;
+    background: linear-gradient(145deg, rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 0%, rgba(225, 219, 87, 1) 48%, rgba(235, 179, 75, 1) 86%, rgba(245, 171, 103, 1) 97%);
+}
+
+.container {
+    box-sizing: border-box;
+    width: 400px;
+    height: 600px;
+    padding: 25px;
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.455);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.display {
+    box-sizing: border-box;
+    height: 155px;
+    border-radius: 10px;
+    padding: 20px 20px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    font-size: 50px;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+
+    overflow: hidden;
+}
+
+.allButtons {
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0;
+}
+
+.upperButtons {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.upperButtons button {
+    font-family: inherit;
+    flex: 1;
+    padding: 25px 0;
+    border-radius: 10px;
+    font-size: 20px;
+    min-width: 0;
+    background-color: white;
+    border: none;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+#lowerButtons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+#lowerButtons button{
+    font-family: inherit;
+    flex: 1 0 20%;
+    padding: 22px;
+    font-size: 20px;
+    border-radius: 10px;
+    background-color: white;
+    border: none;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.upperButtons button:hover, 
+#lowerButtons button:hover{
+    background-color: rgb(240, 235, 235);
+}
+
+#lowerButtons #divide,
+#lowerButtons #multiplication,
+#lowerButtons #minus,
+#lowerButtons #plus,
+#lowerButtons #equal {
+    background-color: rgb(201, 27, 94);
+    color: white;
+}
+
+#lowerButtons #divide:hover,
+#lowerButtons #multiplication:hover,
+#lowerButtons #minus:hover,
+#lowerButtons #plus:hover,
+#lowerButtons #equal:hover {
+    background-color: rgb(180, 9, 78); /* darker shade on hover */
+    color: white;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
