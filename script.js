@@ -1,8 +1,4 @@
 const display = document.querySelector(".display");
-
-const clearBtn = document.querySelector("#clearBtn");
-const deleteBtn = document.querySelector("#deteBtn");
-
 const allBtns = document.querySelectorAll("button");
 
 let num1='';
@@ -30,18 +26,40 @@ function division (num1, num2){
     return showResult(initialResult);
 }
 
+let error=false;
+
 function operate (num1, num2, operator, test) {
-    if (userPressedOperator === 0 && test === '=') return;
-    return (operator === '+') ? addition(num1, num2) : 
-    (operator === '-') ? subtraction(num1, num2) :
-    (operator === 'x') ? multiplication(num1, num2) : division(num1, num2);
+    if(!evaluateCounter) {
+        evaluateCounter = true;
+        if (userPressedOperator === 0 && test === '=') return;
+        if (operator === '+') return addition(num1, num2);
+        if (operator === '-') return subtraction(num1, num2);
+        if (operator === 'x') return multiplication(num1, num2);
+        if (operator === '÷') {
+            if (num2 ==='0') {
+                display.textContent = 'ERROR';
+                error=true;
+                return;
+            }
+            return division(num1, num2);
+        }
+        userPressedOperator = 0;
+    } 
+    if(evaluateCounter){
+        (operator === '+') ? addition(finalResult, num2) : 
+        (operator === '-') ? subtraction(finalResult, num2) :
+        (operator === 'x') ? multiplication(finalResult, num2) : division(finalResult, num2);
+    }
 }
+
+let finalResult=0;
 
 function showResult(value) {
-    value = Math.round(value * 10 ** 8) / 10 ** 8;
-    return display.textContent = value;
+    finalResult = Math.round(value * 10 ** 8) / 10 ** 8;
+    display.textContent = finalResult; 
+    num2='';
+    return;
 }
-
 
 allBtns.forEach(btn => {
     btn.addEventListener("click", (btns) => {
@@ -52,25 +70,29 @@ allBtns.forEach(btn => {
 let userPressedOperator=0;
 let acceptedValues = '0123456789.'
 let operators = '+-÷x';
+let evaluateCounter = false;
 
 function getValue (value) {
-    if(value === 'DELETE') return deleteDisplay(value);
-    if(value === 'CLEAR') return clearDisplay(value);
-    if (value === '=') return operate(num1, num2, operator, value);
+    if(value === 'DELETE') return deleteDisplay();
+    if(value === 'CLEAR' || error) return clearDisplay();
+    if (value === '=' && !error) return operate(num1, num2, operator, value);
     if (operators.includes(value)) {
+       if(num1=== '')return display.textContent = (num1+=value);
        userPressedOperator = 1; 
        display.textContent = (operator = value);
        return;
-    }
-    if (acceptedValues.includes(value) && userPressedOperator === 0) {
-       return display.textContent = (num1+=value);
-        
+    } 
+    if (!evaluateCounter) {
+        if (acceptedValues.includes(value) && userPressedOperator === 0) return display.textContent = (num1+=value);
+        if (acceptedValues.includes(value) && userPressedOperator === 1) return display.textContent = (num2+=value);
     } else {
-        return display.textContent = (num2+=value);
+        num1 = finalResult;
+        if (acceptedValues.includes(value)) return display.textContent = (num2+=value);
+        return;
     }
 }
 
-function deleteDisplay(value){
+function deleteDisplay(){
     if (userPressedOperator === 0) {
         num1 = num1.slice(0, -1);
         display.textContent = num1;
@@ -82,11 +104,13 @@ function deleteDisplay(value){
     }
 }
 
-function clearDisplay(value){
+function clearDisplay(){
     display.textContent="";
     num1 = '';
     num2 = '';
     operator = '';
     userPressedOperator = 0;
+    evaluateCounter = false;
+    error=false;
     return;
 }
