@@ -34,7 +34,7 @@ body {
     align-items: flex-end;
     justify-content: flex-end;
 
-    overflow: hidden;
+    overflow: auto;
 }
 
 .allButtons {

@@ -62,10 +62,32 @@ function showResult(value) {
 }
 
 allBtns.forEach(btn => {
-    btn.addEventListener("click", (btns) => {
-        getValue(btn.textContent);
-    });
+    btn.addEventListener("click", () => getValue(btn.textContent));
 });
+
+document.addEventListener("keydown", (e)=> {
+    let key = e.key;
+    if (key === 'Shift' || key === 'Control' || key === 'Alt' || key === 'Meta') return;
+    const keyMap = {
+        "Enter": "=",
+        "=": "=",            
+        "Backspace": "DEL",  
+        "Escape": "C",       
+        "+": "+",
+        "-": "-",
+        "*": "x",            
+        "/": "÷",            
+        ".": ".",
+    }
+    if (key >= '0' && key <=9) {
+        key.preventDefault();
+        return getValue(key);
+    }
+    const token = keyMap[key];
+    if(!token) return;
+    key.preventDefault();
+    getValue(token);
+})
 
 let userPressedOperator=0;
 let acceptedValues = '0123456789.'
