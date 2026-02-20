@@ -71,23 +71,30 @@ let userPressedOperator=0;
 let acceptedValues = '0123456789.'
 let operators = '+-÷x';
 let evaluateCounter = false;
+let decimalEnterOnlyOnce = 0;
 
 function getValue (value) {
+    if(value === '.') decimalEnterOnlyOnce++;
     if(value === 'DELETE') return deleteDisplay();
     if(value === 'CLEAR' || error) return clearDisplay();
     if (value === '=' && !error) return operate(num1, num2, operator, value);
     if (operators.includes(value)) {
        if(num1=== '')return display.textContent = (num1+=value);
        userPressedOperator = 1; 
+       decimalEnterOnlyOnce = 0;
        display.textContent = (operator = value);
        return;
     } 
-    if (!evaluateCounter) {
-        if (acceptedValues.includes(value) && userPressedOperator === 0) return display.textContent = (num1+=value);
-        if (acceptedValues.includes(value) && userPressedOperator === 1) return display.textContent = (num2+=value);
+    if (decimalEnterOnlyOnce === 1 || decimalEnterOnlyOnce === 0) {
+        if (!evaluateCounter) {
+            if (acceptedValues.includes(value) && userPressedOperator === 0) return display.textContent = (num1+=value);
+            if (acceptedValues.includes(value) && userPressedOperator === 1) return display.textContent = (num2+=value);
+        } else {
+            num1 = finalResult;
+            if (acceptedValues.includes(value)) return display.textContent = (num2+=value);
+            return;
+        }
     } else {
-        num1 = finalResult;
-        if (acceptedValues.includes(value)) return display.textContent = (num2+=value);
         return;
     }
 }
@@ -101,7 +108,7 @@ function deleteDisplay(){
         num2 = num2.slice(0, -1);
         display.textContent = num2;
         return;
-    }
+    } 
 }
 
 function clearDisplay(){
@@ -112,5 +119,6 @@ function clearDisplay(){
     userPressedOperator = 0;
     evaluateCounter = false;
     error=false;
+    decimalEnterOnlyOnce = 0;
     return;
 }
