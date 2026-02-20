@@ -65,27 +65,28 @@ allBtns.forEach(btn => {
     btn.addEventListener("click", () => getValue(btn.textContent));
 });
 
-document.addEventListener("keydown", (e)=> {
-    let key = e.key;
-    if (key === 'Shift' || key === 'Control' || key === 'Alt' || key === 'Meta') return;
-    const keyMap = {
+const keyMap = {
         "Enter": "=",
         "=": "=",            
-        "Backspace": "DEL",  
-        "Escape": "C",       
+        "Backspace": "DELETE",  
+        "Escape": "CLEAR",       
         "+": "+",
         "-": "-",
         "*": "x",            
         "/": "÷",            
         ".": ".",
     }
-    if (key >= '0' && key <=9) {
-        key.preventDefault();
+
+document.addEventListener("keydown", (e)=> {
+    let key = e.key;
+    if (key === 'Shift' || key === 'Control' || key === 'Alt' || key === 'Meta') return;
+    if (key >= '0' && key <= '9') {
+        e.preventDefault();
         return getValue(key);
     }
     const token = keyMap[key];
     if(!token) return;
-    key.preventDefault();
+    e.preventDefault();
     getValue(token);
 })
 
